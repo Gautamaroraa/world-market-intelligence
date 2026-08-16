@@ -35,7 +35,7 @@ def load_dashboard(path: Path) -> dict:
 
 def related_articles(symbol: str, articles: list[dict]) -> list[dict]:
     terms = SYMBOL_TERMS.get(symbol, (symbol.lower(),))
-    return [article for article in articles if any(term in article["title"].lower() for term in terms)]
+    return [article for article in articles if article.get("verificationStatus") == "CONFIRMED" and any(term in article["title"].lower() for term in terms)]
 
 
 def corroboration_count(article: dict, articles: list[dict]) -> int:
@@ -55,24 +55,38 @@ def event_from_article(article: dict, articles: list[dict]) -> dict:
     companies = [symbol for symbol in SYMBOL_TERMS if any(term in article["title"].lower() for term in SYMBOL_TERMS[symbol])][:3]
     corroborated = corroboration_count(article, articles)
     official = any(domain in article["source"].lower() for domain in OFFICIAL_DOMAINS)
+    status = "CONFIRMED" if official or corroborated >= 2 else "DEVELOPING"
+    article["verificationStatus"] = status
     return {
         "id": f"gdelt-{article['id']}",
         "timestamp": article["timestamp"],
+        "publishedAt": article.get("publishedAt", article["timestamp"]),
+        "observedAt": article.get("observedAt", dashboard_timestamp()),
+        "eventAt": article.get("eventAt", article["timestamp"]),
         "region": article["country"].upper(),
         "title": article["title"],
         "source": article["source"],
-        "status": "CONFIRMED" if official or corroborated >= 2 else "DEVELOPING",
+        "status": status,
         "impact": impact,
         "companies": companies or ["MARKET"],
-        "summary": f"Indexed by GDELT with {corroborated} distinct source cluster(s). Review the original evidence before acting.",
+        "summary": f"Indexed by GDELT with {corroborated} distinct source cluster(s). Market impact and company mappings are model inference.",
         "sourceUrl": article["url"],
+        "sourceCount": corroborated,
+        "confirmationBasis": "Official primary-source domain" if official else (f"Corroborated by {corroborated} distinct sources" if corroborated >= 2 else "Awaiting a second independent source"),
+        "isInference": True,
     }
+
+
+def dashboard_timestamp() -> str:
+    return datetime.now(timezone.utc).isoformat()
 
 
 def update_dashboard(dashboard: dict, articles: list[dict]) -> dict:
     dashboard["generatedAt"] = datetime.now(timezone.utc).isoformat()
     if articles:
-        dashboard["events"] = [event_from_article(article, articles) for article in articles[:8]]
+        verified_events = [event_from_article(article, articles) for article in articles]
+        dashboard["events"] = verified_events[:8]
+        dashboard["dataMode"] = "LIVE GDELT EVIDENCE · MARKET PRICES REMAIN SAMPLE"
 
     for key, horizon in (("shortTerm", "short"), ("longTerm", "long")):
         for stock in dashboard[key]:
