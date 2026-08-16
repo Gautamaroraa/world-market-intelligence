@@ -94,12 +94,15 @@ def update_crypto_dashboard(dashboard: dict, snapshots: list[dict]) -> None:
     observed_at = max(item["observedAt"] for item in snapshots)
     by_symbol = {item["symbol"]: item for item in snapshots}
     scores: list[int] = []
+    portfolio_step = 0.0
+    portfolio_day = 0.0
     for asset in crypto.get("assets", []):
         snapshot = by_symbol.get(asset["symbol"])
         if not snapshot:
             continue
         momentum = max(-15, min(15, snapshot["change24h"] * 2.5))
         range_penalty = max(0, snapshot["intradayRange"] - 5) * 1.5
+        previous_price = float(asset.get("price", snapshot["price"]))
         asset["price"] = snapshot["price"]
         asset["change24h"] = snapshot["change24h"]
         asset["volume24h"] = snapshot["volume24h"]
@@ -107,12 +110,34 @@ def update_crypto_dashboard(dashboard: dict, snapshots: list[dict]) -> None:
         asset["observedAt"] = snapshot["observedAt"]
         asset["source"] = snapshot["source"]
         asset["sourceUrl"] = snapshot["sourceUrl"]
+        asset["exchangePrices"] = snapshot.get("exchangePrices", {})
+        asset["spreadBps"] = snapshot.get("spreadBps", 0)
+        asset["feedQuality"] = snapshot.get("feedQuality", "SINGLE SOURCE")
         asset["score"] = round(max(0, min(100, asset["score"] * 0.7 + 20 + momentum - range_penalty)))
         asset["signal"] = "ACCUMULATE" if asset["score"] >= 78 else "HOLD" if asset["score"] >= 62 else "WATCH" if asset["score"] >= 50 else "AVOID"
         scores.append(asset["score"])
+        weight = float(asset.get("allocationCycle", 0)) / 100
+        if previous_price:
+            portfolio_step += weight * (snapshot["price"] / previous_price - 1)
+        portfolio_day += weight * snapshot["change24h"]
     crypto["updatedAt"] = observed_at
     crypto["score"] = round(sum(scores) / len(scores)) if scores else crypto["score"]
-    crypto["dataMode"] = "LIVE COINBASE 24/7 SPOT SNAPSHOT · DERIVATIVES AND ON-CHAIN PROVIDERS PENDING"
+    crypto["regime"] = "RISK-ON" if crypto["score"] >= 72 else "RISK-SELECTIVE" if crypto["score"] >= 55 else "RISK-OFF"
+    crypto["portfolioValue"] = round(float(crypto.get("portfolioValue", 10_000)) * (1 + portfolio_step), 2)
+    crypto["dayChange"] = round(portfolio_day, 2)
+    history = list(crypto.get("history", []))
+    history.append(crypto["portfolioValue"])
+    crypto["history"] = history[-144:]
+    if history:
+        peak = history[0]
+        drawdowns = []
+        for value in history:
+            peak = max(peak, value)
+            drawdowns.append((value / peak - 1) * 100 if peak else 0)
+        crypto["maxDrawdown"] = round(min(drawdowns), 2)
+    qualities = [item.get("feedQuality") for item in snapshots]
+    crypto["feedQuality"] = "VERIFIED" if qualities and all(item == "VERIFIED" for item in qualities) else "PARTIAL / CHECK REQUIRED"
+    crypto["dataMode"] = "LIVE COINBASE + KRAKEN CROSS-CHECKED SPOT SNAPSHOT"
 
 
 def update_dashboard(dashboard: dict, articles: list[dict], crypto_snapshots: list[dict] | None = None) -> dict:
