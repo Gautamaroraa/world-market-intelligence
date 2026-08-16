@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from pipelines.collectors.gdelt import collect_articles
+from pipelines.collectors.crypto import collect_crypto_snapshot
 from pipelines.config import settings
 from pipelines.engine.scoring import lexical_impact, score_security
 
@@ -23,6 +24,11 @@ SYMBOL_TERMS = {
     "MARUTI": ("maruti", "automobile", "vehicle", "car sales"),
     "INFY": ("infosys", "technology", "software", "it spending"),
     "ONGC": ("ongc", "crude", "oil", "energy"),
+    "BTC": ("bitcoin", "btc", "digital asset"),
+    "ETH": ("ethereum", "ether", "eth"),
+    "SOL": ("solana", "sol"),
+    "LINK": ("chainlink", "link"),
+    "AVAX": ("avalanche", "avax"),
 }
 
 OFFICIAL_DOMAINS = ("rbi.org.in", "nseindia.com", "bseindia.com", "sebi.gov.in", "sec.gov", "gov.in")
@@ -81,7 +87,35 @@ def dashboard_timestamp() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
-def update_dashboard(dashboard: dict, articles: list[dict]) -> dict:
+def update_crypto_dashboard(dashboard: dict, snapshots: list[dict]) -> None:
+    crypto = dashboard.get("crypto")
+    if not crypto or not snapshots:
+        return
+    observed_at = max(item["observedAt"] for item in snapshots)
+    by_symbol = {item["symbol"]: item for item in snapshots}
+    scores: list[int] = []
+    for asset in crypto.get("assets", []):
+        snapshot = by_symbol.get(asset["symbol"])
+        if not snapshot:
+            continue
+        momentum = max(-15, min(15, snapshot["change24h"] * 2.5))
+        range_penalty = max(0, snapshot["intradayRange"] - 5) * 1.5
+        asset["price"] = snapshot["price"]
+        asset["change24h"] = snapshot["change24h"]
+        asset["volume24h"] = snapshot["volume24h"]
+        asset["volatility"] = snapshot["intradayRange"]
+        asset["observedAt"] = snapshot["observedAt"]
+        asset["source"] = snapshot["source"]
+        asset["sourceUrl"] = snapshot["sourceUrl"]
+        asset["score"] = round(max(0, min(100, asset["score"] * 0.7 + 20 + momentum - range_penalty)))
+        asset["signal"] = "ACCUMULATE" if asset["score"] >= 78 else "HOLD" if asset["score"] >= 62 else "WATCH" if asset["score"] >= 50 else "AVOID"
+        scores.append(asset["score"])
+    crypto["updatedAt"] = observed_at
+    crypto["score"] = round(sum(scores) / len(scores)) if scores else crypto["score"]
+    crypto["dataMode"] = "LIVE COINBASE 24/7 SPOT SNAPSHOT · DERIVATIVES AND ON-CHAIN PROVIDERS PENDING"
+
+
+def update_dashboard(dashboard: dict, articles: list[dict], crypto_snapshots: list[dict] | None = None) -> dict:
     dashboard["generatedAt"] = datetime.now(timezone.utc).isoformat()
     if articles:
         verified_events = [event_from_article(article, articles) for article in articles]
@@ -95,6 +129,7 @@ def update_dashboard(dashboard: dict, articles: list[dict]) -> dict:
             stock["score"] = result.score
             stock["confidence"] = result.confidence
             stock["signal"] = result.signal
+    update_crypto_dashboard(dashboard, crypto_snapshots or [])
     return dashboard
 
 
@@ -117,14 +152,15 @@ def main() -> int:
     args = parser.parse_args()
     dashboard = load_dashboard(settings.output_path)
     articles: list[dict] = []
+    crypto_snapshots: list[dict] = []
     if not args.offline:
         try:
             articles = collect_articles(settings.gdelt_query, settings.gdelt_max_records, settings.request_timeout)
         except Exception as exc:
             print(f"GDELT collection failed safely: {exc}")
-            return 0
-    atomic_write(settings.output_path, update_dashboard(dashboard, articles))
-    print(f"Research cycle complete: {len(articles)} articles, {settings.output_path}")
+        crypto_snapshots = collect_crypto_snapshot(settings.request_timeout)
+    atomic_write(settings.output_path, update_dashboard(dashboard, articles, crypto_snapshots))
+    print(f"Research cycle complete: {len(articles)} articles, {len(crypto_snapshots)} crypto snapshots, {settings.output_path}")
     return 0
 
 
