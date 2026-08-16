@@ -43,5 +43,27 @@
     { "name":"Healthcare", "score":68, "change":1.2 },
     { "name":"Technology", "score":49, "change":-0.8 },
     { "name":"Metals", "score":36, "change":-2.7 }
-  ]
+  ],
+  "crypto": {
+    "updatedAt": "2026-08-16T10:00:00+00:00",
+    "dataMode": "DEMONSTRATION SNAPSHOT · LIVE COINBASE 24/7 WORKFLOW READY",
+    "regime": "RISK-SELECTIVE",
+    "score": 64,
+    "stableReserve": 30,
+    "btcDominance": 58.2,
+    "assets": [
+      { "symbol":"BTC", "name":"Bitcoin", "sector":"Store of Value", "price":118420, "change24h":1.8, "change7d":4.2, "volume24h":18420, "volatility":3.8, "score":78, "signal":"ACCUMULATE", "allocationTactical":22, "allocationCycle":28, "rationale":"Market leadership, superior spot liquidity and positive medium-horizon momentum support a core allocation, sized below the equity risk budget.", "risk":"Reduce if liquidity deteriorates, the 24-hour score falls below 62, or the seven-day trend breaks with expanding volatility." },
+      { "symbol":"ETH", "name":"Ethereum", "sector":"Smart Contracts", "price":4460, "change24h":0.9, "change7d":2.7, "volume24h":126000, "volatility":4.6, "score":72, "signal":"HOLD", "allocationTactical":16, "allocationCycle":20, "rationale":"Deep liquidity and ecosystem activity support exposure, but relative strength versus Bitcoin remains the confirmation gate.", "risk":"Underperformance against Bitcoin plus weakening network and exchange-flow evidence invalidates the allocation." },
+      { "symbol":"SOL", "name":"Solana", "sector":"Layer 1", "price":194.2, "change24h":2.6, "change7d":6.1, "volume24h":8400000, "volatility":7.4, "score":69, "signal":"HOLD", "allocationTactical":12, "allocationCycle":10, "rationale":"Strong tactical momentum and ecosystem activity are offset by higher volatility, so position size is capped.", "risk":"A volatility spike above the risk band or material network reliability issue triggers a reduction." },
+      { "symbol":"LINK", "name":"Chainlink", "sector":"Oracle Infrastructure", "price":26.8, "change24h":-0.4, "change7d":1.9, "volume24h":9400000, "volatility":6.2, "score":61, "signal":"WATCH", "allocationTactical":6, "allocationCycle":7, "rationale":"Infrastructure relevance supports cycle exposure, but short-horizon momentum has not confirmed an accumulation signal.", "risk":"Persistent relative weakness or declining liquidity keeps the asset below the portfolio threshold." },
+      { "symbol":"AVAX", "name":"Avalanche", "sector":"Layer 1", "price":31.4, "change24h":-1.2, "change7d":-2.3, "volume24h":5100000, "volatility":8.1, "score":48, "signal":"AVOID", "allocationTactical":0, "allocationCycle":5, "rationale":"Cycle optionality remains, but current momentum and volatility do not justify tactical risk.", "risk":"Do not add until the score recovers above 60 with improving liquidity and relative strength." }
+    ],
+    "sectors": [
+      { "name":"Store of Value", "score":82, "change":4.2 },
+      { "name":"Smart Contracts", "score":72, "change":2.7 },
+      { "name":"Layer 1", "score":65, "change":1.9 },
+      { "name":"Oracle / Infrastructure", "score":61, "change":1.1 },
+      { "name":"DeFi", "score":54, "change":-0.8 }
+    ]
+  }
 }
