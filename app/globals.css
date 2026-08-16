@@ -180,3 +180,12 @@ footer { font-size:9px; }
 .report-primary-link { display:inline-flex; margin:0 0 16px; color:#06100e; background:#7cffde; border:1px solid #7cffde; padding:12px 15px; text-decoration:none; font:900 11px ui-monospace,monospace; letter-spacing:.05em; }
 .report-primary-link:hover { background:var(--acid); border-color:var(--acid); }
 @media(max-width:720px){.event-copy h4,.event-copy h4 button{font-size:13px}.event-copy p{font-size:11px}.stock-row b{font-size:13px}.stock-row small{font-size:10px}.report-drawer>h2{font-size:27px}.report-drawer section p{font-size:13px}}
+
+.news-popup { position:fixed; right:24px; bottom:24px; z-index:90; width:min(430px,calc(100vw - 32px)); border:1px solid #47665f; border-left:3px solid var(--amber); background:linear-gradient(145deg,rgba(15,27,27,.98),rgba(6,13,14,.98)); box-shadow:0 24px 80px rgba(0,0,0,.65),0 0 34px rgba(117,255,222,.13); padding:17px; animation:news-in .35s ease both; }
+.news-popup.positive { border-left-color:var(--green); }.news-popup.negative { border-left-color:var(--red); }
+@keyframes news-in { from { transform:translateY(24px); opacity:0; } }
+.news-popup-head { display:flex; justify-content:space-between; align-items:center; color:#7cffde; font:900 10px ui-monospace,monospace; letter-spacing:.08em; }
+.news-popup-head>button { border:0; background:transparent; color:#82938e; font-size:22px; line-height:1; cursor:pointer; }.news-popup-head>button:hover { color:white; }
+.news-popup>p { margin:13px 0 5px; color:#7f918c; font:800 10px ui-monospace,monospace; }.news-popup>h3 { margin:0; font-size:18px; line-height:1.35; }.news-popup>small { display:block; margin-top:8px; color:#758782; font-size:11px; line-height:1.45; }
+.news-popup>div:last-child { display:flex; gap:8px; margin-top:15px; }.news-popup>div:last-child button { border:1px solid #3c5953; background:#101c1c; color:#aebeba; padding:9px 11px; font:900 9px ui-monospace,monospace; cursor:pointer; }.news-popup>div:last-child button:first-child { border-color:#7cffde; color:#7cffde; }.news-popup>div:last-child button:hover { background:#182727; }
+@media(max-width:720px){.news-popup{right:12px;bottom:74px;width:calc(100vw - 24px)}.news-popup>h3{font-size:16px}}
