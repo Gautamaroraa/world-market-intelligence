@@ -181,11 +181,20 @@ footer { font-size:9px; }
 .report-primary-link:hover { background:var(--acid); border-color:var(--acid); }
 @media(max-width:720px){.event-copy h4,.event-copy h4 button{font-size:13px}.event-copy p{font-size:11px}.stock-row b{font-size:13px}.stock-row small{font-size:10px}.report-drawer>h2{font-size:27px}.report-drawer section p{font-size:13px}}
 
-.news-popup { position:fixed; right:24px; bottom:24px; z-index:90; width:min(430px,calc(100vw - 32px)); border:1px solid #47665f; border-left:3px solid var(--amber); background:linear-gradient(145deg,rgba(15,27,27,.98),rgba(6,13,14,.98)); box-shadow:0 24px 80px rgba(0,0,0,.65),0 0 34px rgba(117,255,222,.13); padding:17px; animation:news-in .35s ease both; }
+.news-popup-layer { position:fixed; inset:0; z-index:90; display:grid; place-items:center; padding:20px; background:radial-gradient(circle at center,rgba(18,58,55,.17),rgba(1,5,6,.76)); backdrop-filter:blur(7px); }
+.news-popup { position:relative; width:min(600px,calc(100vw - 32px)); border:1px solid #47665f; border-left:3px solid var(--amber); background:linear-gradient(145deg,rgba(15,27,27,.99),rgba(6,13,14,.99)); box-shadow:0 30px 100px rgba(0,0,0,.75),0 0 60px rgba(117,255,222,.17); padding:26px; animation:news-in .35s ease both; overflow:hidden; }
 .news-popup.positive { border-left-color:var(--green); }.news-popup.negative { border-left-color:var(--red); }
-@keyframes news-in { from { transform:translateY(24px); opacity:0; } }
+@keyframes news-in { from { transform:scale(.94); opacity:0; } }
 .news-popup-head { display:flex; justify-content:space-between; align-items:center; color:#7cffde; font:900 10px ui-monospace,monospace; letter-spacing:.08em; }
 .news-popup-head>button { border:0; background:transparent; color:#82938e; font-size:22px; line-height:1; cursor:pointer; }.news-popup-head>button:hover { color:white; }
-.news-popup>p { margin:13px 0 5px; color:#7f918c; font:800 10px ui-monospace,monospace; }.news-popup>h3 { margin:0; font-size:18px; line-height:1.35; }.news-popup>small { display:block; margin-top:8px; color:#758782; font-size:11px; line-height:1.45; }
+.news-popup>p { margin:13px 0 5px; color:#7f918c; font:800 10px ui-monospace,monospace; }.news-popup>h3 { margin:0; max-width:88%; font-size:24px; line-height:1.35; }.news-popup>small { display:block; margin-top:10px; color:#758782; font-size:12px; line-height:1.45; }
 .news-popup>div:last-child { display:flex; gap:8px; margin-top:15px; }.news-popup>div:last-child button { border:1px solid #3c5953; background:#101c1c; color:#aebeba; padding:9px 11px; font:900 9px ui-monospace,monospace; cursor:pointer; }.news-popup>div:last-child button:first-child { border-color:#7cffde; color:#7cffde; }.news-popup>div:last-child button:hover { background:#182727; }
-@media(max-width:720px){.news-popup{right:12px;bottom:74px;width:calc(100vw - 24px)}.news-popup>h3{font-size:16px}}
+@media(max-width:720px){.news-popup-layer{padding:12px}.news-popup{width:100%;padding:20px}.news-popup>h3{font-size:20px;max-width:100%}.news-popup>div:last-child{flex-wrap:wrap}}
+
+.voice-button { height:38px; display:flex; align-items:center; gap:7px; border:1px solid #344b47; background:#101617; color:#80918c; padding:0 11px; font:900 9px ui-monospace,monospace; cursor:pointer; letter-spacing:.05em; }
+.voice-button i { width:7px; height:7px; border-radius:50%; background:#52615d; }
+.voice-button.active { color:#7cffde; border-color:#4b8b7c; box-shadow:inset 0 0 18px rgba(92,255,218,.07); }.voice-button.active i { background:#7cffde; box-shadow:0 0 12px #7cffde; animation:voice-pulse 1.5s infinite; }
+@keyframes voice-pulse { 50% { opacity:.35; transform:scale(.72); } }
+.alert-scan-ring { position:absolute; right:-45px; top:-55px; width:180px; height:180px; opacity:.3; pointer-events:none; }.alert-scan-ring i { position:absolute; inset:0; border:1px solid #7cffde; border-radius:50%; animation:scan-wave 2.4s infinite; }.alert-scan-ring i:nth-child(2){inset:25px;animation-delay:.35s}.alert-scan-ring i:nth-child(3){inset:50px;animation-delay:.7s}
+@keyframes scan-wave { 50% { opacity:.2; transform:scale(1.06); } }
+@media(max-width:720px){.voice-button{position:absolute;right:104px;top:18px}.top-actions .profile-button{display:none}}
