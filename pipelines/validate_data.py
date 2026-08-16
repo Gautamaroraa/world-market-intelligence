@@ -17,6 +17,18 @@ def main() -> int:
         for stock in collection:
             if not 0 <= stock["score"] <= 100 or not 0 <= stock["confidence"] <= 100:
                 raise ValueError(f"Invalid score for {stock['symbol']}")
+    if "crypto" in payload:
+        crypto = payload["crypto"]
+        datetime.fromisoformat(crypto["updatedAt"])
+        if not 0 <= crypto["score"] <= 100 or not 0 <= crypto["stableReserve"] <= 100:
+            raise ValueError("Invalid crypto risk controls")
+        symbols: set[str] = set()
+        for asset in crypto["assets"]:
+            if asset["symbol"] in symbols or not 0 <= asset["score"] <= 100:
+                raise ValueError(f"Invalid crypto asset: {asset['symbol']}")
+            if not 0 <= asset["allocationTactical"] <= 100 or not 0 <= asset["allocationCycle"] <= 100:
+                raise ValueError(f"Invalid crypto allocation: {asset['symbol']}")
+            symbols.add(asset["symbol"])
     print("Dashboard data validation passed")
     return 0
 
