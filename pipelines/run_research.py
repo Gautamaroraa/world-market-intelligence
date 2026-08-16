@@ -128,6 +128,8 @@ def update_crypto_dashboard(dashboard: dict, snapshots: list[dict]) -> None:
         asset["exchangePrices"] = snapshot.get("exchangePrices", {})
         asset["spreadBps"] = snapshot.get("spreadBps", 0)
         asset["feedQuality"] = snapshot.get("feedQuality", "SINGLE SOURCE")
+        if snapshot.get("futures"):
+            asset["futures"] = snapshot["futures"]
         asset["score"] = round(max(0, min(100, asset["score"] * 0.7 + 20 + momentum - range_penalty)))
         asset["signal"] = "ACCUMULATE" if asset["score"] >= 78 else "HOLD" if asset["score"] >= 62 else "WATCH" if asset["score"] >= 50 else "AVOID"
         scores.append(asset["score"])

@@ -30,6 +30,9 @@ def main() -> int:
                 raise ValueError(f"Invalid crypto asset: {asset['symbol']}")
             if not 0 <= asset["allocationTactical"] <= 100 or not 0 <= asset["allocationCycle"] <= 100:
                 raise ValueError(f"Invalid crypto allocation: {asset['symbol']}")
+            futures = asset.get("futures")
+            if futures and (futures.get("markPrice", 0) <= 0 or futures.get("indexPrice", 0) <= 0 or futures.get("openInterest", 0) < 0):
+                raise ValueError(f"Invalid futures telemetry: {asset['symbol']}")
             symbols.add(asset["symbol"])
     print("Dashboard data validation passed")
     return 0

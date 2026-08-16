@@ -25,3 +25,18 @@ must retain the original source URL and corroboration record.
 Language models may classify, summarise and map evidence. Deterministic code
 owns scoring thresholds, risk caps and portfolio allocation. No signal may
 place a live trade until it passes point-in-time backtesting and paper trading.
+
+## Trading and derivatives boundary
+
+- Spot quotes and futures telemetry are separate records; mark price must never
+  be presented as the spot price.
+- Funding, open interest, index price and mark price may inform a model but do
+  not prove future direction.
+- Liquidation values shown in the browser are estimates. The connected venue's
+  maintenance margin, fees, contract size and margin engine are authoritative.
+- NSE lot sizes, eligible underlyings, expiries and margins must be read from an
+  official exchange or authorised-broker feed at execution time.
+- Browser storage may contain paper orders and preferences only. API keys,
+  access tokens and account identifiers are prohibited.
+- Live order submission remains disabled until a private execution service adds
+  authentication, idempotency, audit logging, rate limits and explicit approval.

@@ -11,14 +11,19 @@ responsive dashboard through GitHub Pages.
 - Separate short- and long-term decision tables
 - Transparent deterministic scoring rules
 - GDELT global-event discovery using the standard library only
+- Coinbase + Kraken spot-price cross-checking for ten established crypto assets
+- Binance USD-M public mark, index, funding and open-interest snapshots
 - Atomic JSON research store committed by GitHub Actions
-- Scheduled research every three hours
+- Scheduled research every ten minutes
+- Unified NSE/crypto Trade Lab for spot and futures order planning
+- Device-local paper orders, watchlists, risk sizing, stops and targets
+- Isolated/cross margin modelling, reduce-only controls and liquidation estimates
 - Automatic GitHub Pages deployment
 - Offline data validation and unit tests
 - Safe seed dataset so the interface works before integrations are configured
 
-The included securities and decisions are demonstration data. They are not
-current recommendations or investment advice.
+The included decisions are model outputs and not investment advice. The Trade
+Lab is paper-only: it never submits an order or stores broker/exchange secrets.
 
 ## Repository map
 
@@ -80,6 +85,13 @@ Read `DATA_POLICY.md` before extending collectors or scoring. GDELT discovers
 events; it does not independently verify every article. A signal should become
 actionable only after primary-source verification or independent corroboration.
 
+## Production boundary
+
+GitHub Pages is a public static host. Real-money order routing requires a
+private backend, authenticated broker/exchange adapters, server-side secret
+storage, idempotency controls, an audit log and venue-native margin validation.
+Those credentials must never be added to this repository or the browser app.
+
 ## Next production modules
 
 - NSE filing collector and announcement parser
@@ -87,4 +99,6 @@ actionable only after primary-source verification or independent corroboration.
 - Point-in-time fundamentals store
 - Evidence clustering and entity-resolution graph
 - Walk-forward backtesting with transaction costs
-- Paper portfolio ledger and risk-budget enforcement
+- Secure broker/exchange execution service with explicit human confirmation
+- Options chain, Greeks and strategy payoff engine
+- Venue-native fees, slippage and tax accounting

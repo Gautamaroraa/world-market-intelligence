@@ -40,6 +40,23 @@ def _kraken_quote(pair: str, timeout: int) -> dict:
     return {"exchange": "Kraken", "price": float(row["c"][0]), "open": float(row["o"]), "high": float(row["h"][1]), "low": float(row["l"][1]), "volume": float(row["v"][1])}
 
 
+def _binance_futures_quote(symbol: str, timeout: int) -> dict:
+    """Read public USD-M perpetual telemetry; no account or API key is used."""
+    contract = f"{symbol}USDT"
+    premium = _read_json(f"https://fapi.binance.com/fapi/v1/premiumIndex?{urlencode({'symbol': contract})}", timeout)
+    interest = _read_json(f"https://fapi.binance.com/fapi/v1/openInterest?{urlencode({'symbol': contract})}", timeout)
+    return {
+        "contract": contract,
+        "markPrice": float(premium["markPrice"]),
+        "indexPrice": float(premium["indexPrice"]),
+        "fundingRate": float(premium["lastFundingRate"]) * 100,
+        "nextFundingTime": int(premium["nextFundingTime"]),
+        "openInterest": float(interest["openInterest"]),
+        "observedAt": datetime.now(timezone.utc).isoformat(),
+        "source": "Binance USD-M public market data",
+    }
+
+
 def merge_quotes(symbol: str, quotes: list[dict], observed_at: str) -> dict | None:
     if not quotes:
         return None
@@ -77,5 +94,9 @@ def collect_crypto_snapshot(timeout: int = 15) -> list[dict]:
                 print(f"{exchange} collection failed safely for {symbol}: {exc}")
         merged = merge_quotes(symbol, quotes, observed_at)
         if merged:
+            try:
+                merged["futures"] = _binance_futures_quote(symbol, timeout)
+            except Exception as exc:
+                print(f"Binance futures collection failed safely for {symbol}: {exc}")
             snapshots.append(merged)
     return snapshots
