@@ -13,6 +13,8 @@ responsive dashboard through GitHub Pages.
 - GDELT global-event discovery using the standard library only
 - Coinbase + Kraken spot-price cross-checking for ten established crypto assets
 - Binance USD-M public mark, index, funding and open-interest snapshots
+- Binance browser WebSocket prices repainted once per second for crypto spot and futures
+- Six-horizon crypto confirmation across 1m, 5m, 15m, 1h, 4h and 1d candles
 - Atomic JSON research store committed by GitHub Actions
 - Scheduled research every ten minutes
 - Unified NSE/crypto entry and exit planner for spot and futures
@@ -24,6 +26,12 @@ responsive dashboard through GitHub Pages.
 
 The included decisions are model outputs and not investment advice. The Trade
 Lab provides planning levels only; it never submits or stores an order.
+
+Crypto candle structure refreshes once per minute; the displayed crypto price
+refreshes once per second from the latest public stream message. Browser sleep,
+network latency and venue outages can delay an update. NSE second-by-second
+quotes and OHLC candles remain disabled until an authorised broker or licensed
+exchange feed is connected.
 
 ## Repository map
 

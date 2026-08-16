@@ -30,6 +30,14 @@ dashboard generates planning levels only and never places an order.
 
 - Spot quotes and futures telemetry are separate records; mark price must never
   be presented as the spot price.
+- Crypto spot trade and futures mark-price WebSockets are rendered once per
+  second. This is a display cadence, not a guarantee of tick completeness or an
+  executable price.
+- Crypto multi-timeframe structure uses 1m, 5m, 15m, 1h, 4h and 1d public
+  candles and refreshes once per minute. A directional confirmation requires at
+  least four aligned horizons and no opposing 1h, 4h or 1d structure.
+- The dashboard must show `FEED REQUIRED` rather than infer NSE live prices or
+  candles from stale snapshots when no licensed NSE/broker stream is present.
 - Funding, open interest, index price and mark price may inform a model but do
   not prove future direction.
 - Liquidation values shown in the browser are estimates. The connected venue's
