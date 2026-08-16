@@ -13,6 +13,11 @@ PRODUCTS = {
     "SOL": {"coinbase": "SOL-USD", "kraken": "SOLUSD"},
     "LINK": {"coinbase": "LINK-USD", "kraken": "LINKUSD"},
     "AVAX": {"coinbase": "AVAX-USD", "kraken": "AVAXUSD"},
+    "XRP": {"coinbase": "XRP-USD", "kraken": "XRPUSD"},
+    "ADA": {"coinbase": "ADA-USD", "kraken": "ADAUSD"},
+    "DOT": {"coinbase": "DOT-USD", "kraken": "DOTUSD"},
+    "LTC": {"coinbase": "LTC-USD", "kraken": "LTCUSD"},
+    "UNI": {"coinbase": "UNI-USD", "kraken": "UNIUSD"},
 }
 
 
