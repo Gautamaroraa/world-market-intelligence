@@ -23,8 +23,8 @@ must retain the original source URL and corroboration record.
 ## Decision boundary
 
 Language models may classify, summarise and map evidence. Deterministic code
-owns scoring thresholds, risk caps and portfolio allocation. No signal may
-place a live trade until it passes point-in-time backtesting and paper trading.
+owns scoring thresholds, risk caps and portfolio allocation. The public
+dashboard generates planning levels only and never places an order.
 
 ## Trading and derivatives boundary
 
@@ -36,7 +36,7 @@ place a live trade until it passes point-in-time backtesting and paper trading.
   maintenance margin, fees, contract size and margin engine are authoritative.
 - NSE lot sizes, eligible underlyings, expiries and margins must be read from an
   official exchange or authorised-broker feed at execution time.
-- Browser storage may contain paper orders and preferences only. API keys,
-  access tokens and account identifiers are prohibited.
+- API keys, access tokens and account identifiers are prohibited in browser
+  storage and the public repository.
 - Live order submission remains disabled until a private execution service adds
   authentication, idempotency, audit logging, rate limits and explicit approval.

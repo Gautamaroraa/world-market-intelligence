@@ -15,15 +15,15 @@ responsive dashboard through GitHub Pages.
 - Binance USD-M public mark, index, funding and open-interest snapshots
 - Atomic JSON research store committed by GitHub Actions
 - Scheduled research every ten minutes
-- Unified NSE/crypto Trade Lab for spot and futures order planning
-- Device-local paper orders, watchlists, risk sizing, stops and targets
-- Isolated/cross margin modelling, reduce-only controls and liquidation estimates
+- Unified NSE/crypto entry and exit planner for spot and futures
+- Exact conditional entry zones, breakout levels, stops and two profit targets
+- Long/short invalidation, risk-sized quantity and leverage ceilings
 - Automatic GitHub Pages deployment
 - Offline data validation and unit tests
 - Safe seed dataset so the interface works before integrations are configured
 
 The included decisions are model outputs and not investment advice. The Trade
-Lab is paper-only: it never submits an order or stores broker/exchange secrets.
+Lab provides planning levels only; it never submits or stores an order.
 
 ## Repository map
 
