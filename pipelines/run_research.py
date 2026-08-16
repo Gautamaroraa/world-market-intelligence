@@ -29,6 +29,21 @@ SYMBOL_TERMS = {
     "SOL": ("solana", "sol"),
     "LINK": ("chainlink", "link"),
     "AVAX": ("avalanche", "avax"),
+    "XRP": ("xrp", "ripple"),
+    "ADA": ("cardano", "ada"),
+    "DOT": ("polkadot", "dot"),
+    "LTC": ("litecoin", "ltc"),
+    "UNI": ("uniswap", "uni", "decentralized exchange"),
+    "ICICIBANK": ("icici", "bank", "credit", "deposit"),
+    "TCS": ("tata consultancy", "tcs", "technology", "software"),
+    "ITC": ("itc", "consumer", "cigarette", "fmcg"),
+    "M&M": ("mahindra", "automobile", "tractor", "suv"),
+    "NTPC": ("ntpc", "power", "electricity", "renewable"),
+    "AXISBANK": ("axis bank", "bank", "credit", "deposit"),
+    "TITAN": ("titan", "jewellery", "consumer", "watch"),
+    "ADANIPORTS": ("adani ports", "port", "logistics", "cargo"),
+    "POWERGRID": ("power grid", "transmission", "electricity"),
+    "HINDUNILVR": ("hindustan unilever", "hul", "fmcg", "consumer"),
 }
 
 OFFICIAL_DOMAINS = ("rbi.org.in", "nseindia.com", "bseindia.com", "sebi.gov.in", "sec.gov", "gov.in")
