@@ -2,106 +2,26 @@
 
 import { useEffect, useRef, useState } from "react";
 
-export type GlobeEvent = {
-  id: string;
-  region: string;
-  title: string;
-  status: "CONFIRMED" | "DEVELOPING" | "DISPUTED";
-  impact: "POSITIVE" | "NEGATIVE" | "MIXED";
-  companies: string[];
-};
+export type GlobeEvent = { id:string; region:string; title:string; status:"CONFIRMED"|"DEVELOPING"|"DISPUTED"; impact:"POSITIVE"|"NEGATIVE"|"MIXED"; companies:string[] };
+const REGION_COORDS:Record<string,[number,number]>={INDIA:[22,79],ASIA:[34,100],"MIDDLE EAST":[25,45],"UNITED STATES":[38,-97],EUROPE:[50,10],AFRICA:[2,20],"SOUTH AMERICA":[-15,-60],OCEANIA:[-25,135],GLOBAL:[4,0]};
+const colours={POSITIVE:"#7cffb0",NEGATIVE:"#ff617d",MIXED:"#f5bd51"};
 
-const REGION_COORDS: Record<string, [number, number]> = {
-  INDIA: [22, 79], ASIA: [34, 100], "MIDDLE EAST": [25, 45],
-  "UNITED STATES": [38, -97], EUROPE: [50, 10], AFRICA: [2, 20], GLOBAL: [4, 0],
-};
-
-const colours = { POSITIVE: "#7cffb0", NEGATIVE: "#ff617d", MIXED: "#f5bd51" };
-
-export default function IntelligenceGlobe({ events, selectedId, onSelect }: { events: GlobeEvent[]; selectedId?: string; onSelect: (event: GlobeEvent) => void }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [paused, setPaused] = useState(false);
-  const [hovered, setHovered] = useState<string>();
-  const markersRef = useRef<{ event: GlobeEvent; x: number; y: number; visible: boolean }[]>([]);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    let raf = 0;
-    let angle = -0.35;
-    let last = performance.now();
-
-    const draw = (now: number) => {
-      const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(devicePixelRatio || 1, 2);
-      if (canvas.width !== Math.round(rect.width * dpr) || canvas.height !== Math.round(rect.height * dpr)) {
-        canvas.width = Math.round(rect.width * dpr); canvas.height = Math.round(rect.height * dpr);
-      }
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const w = rect.width, h = rect.height, r = Math.min(w * .3, h * .42), cx = w * .42, cy = h * .52;
-      const dt = Math.min(40, now - last); last = now;
-      if (!paused) angle += dt * .000055;
-      ctx.clearRect(0, 0, w, h);
-
-      const glow = ctx.createRadialGradient(cx - r * .25, cy - r * .2, 0, cx, cy, r * 1.18);
-      glow.addColorStop(0, "rgba(84,255,214,.13)"); glow.addColorStop(.66, "rgba(15,64,64,.1)"); glow.addColorStop(1, "rgba(2,10,12,0)");
-      ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(cx, cy, r * 1.25, 0, Math.PI * 2); ctx.fill();
-      ctx.strokeStyle = "rgba(98,255,226,.35)"; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
-
-      ctx.save(); ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.clip();
-      ctx.fillStyle = "rgba(6,24,26,.88)"; ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
-      ctx.strokeStyle = "rgba(114,255,222,.13)"; ctx.lineWidth = 1;
-      for (let lat = -60; lat <= 60; lat += 30) {
-        const y = cy - Math.sin(lat * Math.PI / 180) * r;
-        const rx = Math.cos(lat * Math.PI / 180) * r;
-        ctx.beginPath(); ctx.ellipse(cx, y, rx, rx * .18, 0, 0, Math.PI * 2); ctx.stroke();
-      }
-      for (let lon = 0; lon < 180; lon += 30) {
-        ctx.beginPath(); ctx.ellipse(cx, cy, Math.abs(Math.cos(angle + lon * Math.PI / 180)) * r, r, 0, 0, Math.PI * 2); ctx.stroke();
-      }
-      ctx.restore();
-
-      const markers = events.slice(0, 8).map((event) => {
-        const [lat, lon] = REGION_COORDS[event.region.toUpperCase()] ?? REGION_COORDS.GLOBAL;
-        const lambda = lon * Math.PI / 180 + angle;
-        const phi = lat * Math.PI / 180;
-        const visible = Math.cos(phi) * Math.cos(lambda) > -.12;
-        const x = cx + r * Math.cos(phi) * Math.sin(lambda);
-        const y = cy - r * Math.sin(phi);
-        return { event, x, y, visible };
-      });
-      markersRef.current = markers;
-
-      const india = (() => { const [lat, lon] = REGION_COORDS.INDIA; const l = lon * Math.PI / 180 + angle; const p = lat * Math.PI / 180; return { x: cx + r * Math.cos(p) * Math.sin(l), y: cy - r * Math.sin(p), visible: Math.cos(p) * Math.cos(l) > -.12 }; })();
-      ctx.setLineDash([4, 6]);
-      markers.forEach((marker) => {
-        if (!marker.visible || !india.visible || marker.event.region === "INDIA") return;
-        ctx.strokeStyle = "rgba(117,255,221,.22)"; ctx.beginPath(); ctx.moveTo(india.x, india.y); ctx.quadraticCurveTo((india.x + marker.x) / 2, Math.min(india.y, marker.y) - 45, marker.x, marker.y); ctx.stroke();
-      });
-      ctx.setLineDash([]);
-      markers.forEach((marker, i) => {
-        if (!marker.visible) return;
-        const selected = marker.event.id === selectedId || marker.event.id === hovered;
-        const pulse = 6 + ((now / 650 + i) % 1) * 16;
-        ctx.strokeStyle = colours[marker.event.impact] + (selected ? "bb" : "55"); ctx.beginPath(); ctx.arc(marker.x, marker.y, pulse, 0, Math.PI * 2); ctx.stroke();
-        ctx.fillStyle = colours[marker.event.impact]; ctx.shadowColor = colours[marker.event.impact]; ctx.shadowBlur = selected ? 20 : 10; ctx.beginPath(); ctx.arc(marker.x, marker.y, selected ? 6 : 4, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
-      });
-
-      ctx.strokeStyle = "rgba(199,255,74,.22)"; ctx.beginPath(); ctx.ellipse(cx, cy, r * 1.3, r * .24, -.12, 0, Math.PI * 2); ctx.stroke();
-      raf = requestAnimationFrame(draw);
-    };
-    raf = requestAnimationFrame(draw);
-    return () => cancelAnimationFrame(raf);
-  }, [events, paused, hovered, selectedId]);
-
-  const locate = (x: number, y: number) => markersRef.current.filter(m => m.visible).sort((a, b) => Math.hypot(a.x - x, a.y - y) - Math.hypot(b.x - x, b.y - y))[0];
-  const point = (event: React.MouseEvent<HTMLCanvasElement>) => { const rect = event.currentTarget.getBoundingClientRect(); return { x: event.clientX - rect.left, y: event.clientY - rect.top }; };
-
-  return <div className="globe-stage">
-    <canvas ref={canvasRef} onMouseMove={(e) => { const p = point(e); const hit = locate(p.x, p.y); setHovered(hit && Math.hypot(hit.x - p.x, hit.y - p.y) < 18 ? hit.event.id : undefined); }} onMouseLeave={() => setHovered(undefined)} onClick={(e) => { const p = point(e); const hit = locate(p.x, p.y); if (hit && Math.hypot(hit.x - p.x, hit.y - p.y) < 22) { setPaused(true); onSelect(hit.event); } }} aria-label="Interactive globe of evidence-backed market events" />
-    <button className="globe-control" onClick={() => setPaused(v => !v)}>{paused ? "RESUME ROTATION" : "PAUSE ROTATION"}</button>
-    <div className="globe-readout"><span>ORBITAL FEED</span><strong>{events.length.toString().padStart(2, "0")}</strong><small>tracked events</small></div>
+export default function IntelligenceGlobe({events,selectedId,onSelect,mode="market"}:{events:GlobeEvent[];selectedId?:string;onSelect:(event:GlobeEvent)=>void;mode?:"market"|"crypto"}){
+  const canvasRef=useRef<HTMLCanvasElement>(null),angleRef=useRef(-.35),dragRef=useRef<{x:number;moved:boolean}|null>(null),markersRef=useRef<{event:GlobeEvent;x:number;y:number;visible:boolean}[]>([]);
+  const [paused,setPaused]=useState(false),[dragging,setDragging]=useState(false),[hovered,setHovered]=useState<{id:string;x:number;y:number}>(),[zoom,setZoom]=useState(1);
+  useEffect(()=>{const canvas=canvasRef.current,ctx=canvas?.getContext("2d");if(!canvas||!ctx)return;let raf=0,last=performance.now();const draw=(now:number)=>{const rect=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);if(canvas.width!==Math.round(rect.width*dpr)||canvas.height!==Math.round(rect.height*dpr)){canvas.width=Math.round(rect.width*dpr);canvas.height=Math.round(rect.height*dpr)}ctx.setTransform(dpr,0,0,dpr,0,0);const w=rect.width,h=rect.height,r=Math.min(w*.3,h*.42)*zoom,cx=w*.42,cy=h*.52,dt=Math.min(40,now-last);last=now;if(!paused&&!dragging)angleRef.current+=dt*.000055;const angle=angleRef.current;ctx.clearRect(0,0,w,h);
+    const glow=ctx.createRadialGradient(cx-r*.25,cy-r*.2,0,cx,cy,r*1.2);glow.addColorStop(0,mode==="crypto"?"rgba(80,171,255,.16)":"rgba(84,255,214,.13)");glow.addColorStop(.66,"rgba(15,64,64,.1)");glow.addColorStop(1,"rgba(2,10,12,0)");ctx.fillStyle=glow;ctx.beginPath();ctx.arc(cx,cy,r*1.25,0,Math.PI*2);ctx.fill();ctx.strokeStyle=mode==="crypto"?"rgba(100,190,255,.48)":"rgba(98,255,226,.35)";ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.stroke();
+    ctx.save();ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.clip();ctx.fillStyle=mode==="crypto"?"rgba(5,20,31,.9)":"rgba(6,24,26,.88)";ctx.fillRect(cx-r,cy-r,r*2,r*2);ctx.strokeStyle=mode==="crypto"?"rgba(105,196,255,.17)":"rgba(114,255,222,.13)";for(let lat=-60;lat<=60;lat+=30){const y=cy-Math.sin(lat*Math.PI/180)*r,rx=Math.cos(lat*Math.PI/180)*r;ctx.beginPath();ctx.ellipse(cx,y,rx,rx*.18,0,0,Math.PI*2);ctx.stroke()}for(let lon=0;lon<180;lon+=30){ctx.beginPath();ctx.ellipse(cx,cy,Math.abs(Math.cos(angle+lon*Math.PI/180))*r,r,0,0,Math.PI*2);ctx.stroke()}ctx.restore();
+    const markers=events.slice(0,12).map((event,index)=>{let [lat,lon]=REGION_COORDS[event.region.toUpperCase()]??REGION_COORDS.GLOBAL;if(event.region.toUpperCase()==="GLOBAL"){lat=-42+(index*29)%84;lon=-160+(index*67)%320}const lambda=lon*Math.PI/180+angle,phi=lat*Math.PI/180,visible=Math.cos(phi)*Math.cos(lambda)>-.12;return{event,x:cx+r*Math.cos(phi)*Math.sin(lambda),y:cy-r*Math.sin(phi),visible}});markersRef.current=markers;
+    ctx.setLineDash([4,6]);markers.forEach((marker,index)=>{const next=markers[(index+1)%markers.length];if(!marker.visible||!next?.visible)return;ctx.strokeStyle=mode==="crypto"?"rgba(96,174,255,.2)":"rgba(117,255,221,.18)";ctx.beginPath();ctx.moveTo(marker.x,marker.y);ctx.quadraticCurveTo((marker.x+next.x)/2,Math.min(marker.y,next.y)-35,next.x,next.y);ctx.stroke()});ctx.setLineDash([]);
+    markers.forEach((marker,index)=>{if(!marker.visible)return;const selected=marker.event.id===selectedId||marker.event.id===hovered?.id,pulse=6+((now/650+index)%1)*16;ctx.strokeStyle=colours[marker.event.impact]+(selected?"bb":"55");ctx.beginPath();ctx.arc(marker.x,marker.y,pulse,0,Math.PI*2);ctx.stroke();ctx.fillStyle=colours[marker.event.impact];ctx.shadowColor=colours[marker.event.impact];ctx.shadowBlur=selected?22:10;ctx.beginPath();ctx.arc(marker.x,marker.y,selected?7:4,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0});ctx.strokeStyle=mode==="crypto"?"rgba(95,184,255,.34)":"rgba(199,255,74,.22)";ctx.beginPath();ctx.ellipse(cx,cy,r*1.3,r*.24,-.12,0,Math.PI*2);ctx.stroke();raf=requestAnimationFrame(draw)};raf=requestAnimationFrame(draw);return()=>cancelAnimationFrame(raf)},[events,paused,dragging,hovered?.id,selectedId,zoom,mode]);
+  const point=(event:React.PointerEvent<HTMLCanvasElement>|React.MouseEvent<HTMLCanvasElement>)=>{const rect=event.currentTarget.getBoundingClientRect();return{x:event.clientX-rect.left,y:event.clientY-rect.top}},locate=(x:number,y:number)=>markersRef.current.filter(marker=>marker.visible).sort((a,b)=>Math.hypot(a.x-x,a.y-y)-Math.hypot(b.x-x,b.y-y))[0];
+  const hover=(x:number,y:number)=>{const hit=locate(x,y);setHovered(hit&&Math.hypot(hit.x-x,hit.y-y)<22?{id:hit.event.id,x:hit.x,y:hit.y}:undefined)};
+  const hoveredEvent=events.find(event=>event.id===hovered?.id);
+  return <div className={`globe-stage ${mode} ${dragging?"dragging":""}`}>
+    <canvas ref={canvasRef} tabIndex={0} onPointerDown={event=>{event.currentTarget.setPointerCapture(event.pointerId);dragRef.current={x:event.clientX,moved:false};setDragging(true)}} onPointerMove={event=>{const p=point(event);if(dragRef.current){const dx=event.clientX-dragRef.current.x;angleRef.current+=dx*.008;dragRef.current={x:event.clientX,moved:dragRef.current.moved||Math.abs(dx)>2};}else hover(p.x,p.y)}} onPointerUp={event=>{const p=point(event),wasDrag=dragRef.current?.moved;dragRef.current=null;setDragging(false);if(!wasDrag){const hit=locate(p.x,p.y);if(hit&&Math.hypot(hit.x-p.x,hit.y-p.y)<25){setPaused(true);onSelect(hit.event)}}}} onPointerLeave={()=>{dragRef.current=null;setDragging(false);setHovered(undefined)}} onWheel={event=>{event.preventDefault();setZoom(value=>Math.max(.78,Math.min(1.28,value-event.deltaY*.001)))} } onKeyDown={event=>{if(event.key==="ArrowLeft")angleRef.current-=.12;if(event.key==="ArrowRight")angleRef.current+=.12;if(event.key===" "){event.preventDefault();setPaused(value=>!value)}if(event.key==="Enter"){const hit=markersRef.current.find(marker=>marker.visible);if(hit)onSelect(hit.event)}} aria-label={`Interactive ${mode} globe. Drag to rotate, scroll to zoom and select a signal for details.`}/>
+    {hoveredEvent&&hovered&&<div className="globe-tooltip" style={{left:hovered.x,top:hovered.y}}><span>{hoveredEvent.region} · {hoveredEvent.status}</span><strong>{hoveredEvent.title}</strong><small>{hoveredEvent.companies.join(" · ")}</small></div>}
+    <div className="globe-tools"><button onClick={()=>setZoom(value=>Math.min(1.28,value+.1))} aria-label="Zoom globe in">＋</button><button onClick={()=>setZoom(value=>Math.max(.78,value-.1))} aria-label="Zoom globe out">−</button><button onClick={()=>{angleRef.current=-.35;setZoom(1)}} aria-label="Reset globe view">RESET</button></div>
+    <button className="globe-control" onClick={()=>setPaused(value=>!value)}>{paused?"RESUME ROTATION":"PAUSE ROTATION"}</button><div className="globe-readout"><span>{mode==="crypto"?"CRYPTO ORBIT":"ORBITAL FEED"}</span><strong>{events.length.toString().padStart(2,"0")}</strong><small>tracked signals</small></div>
   </div>;
 }
