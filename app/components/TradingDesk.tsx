@@ -41,7 +41,7 @@ function Level({label,value,note,tone,format}:{label:string;value:number;note:st
 
 export default function TradingDesk({stocks,coins}:{stocks:Stock[];coins:Coin[]}){
   const[market,setMarket]=useState<Market>("NSE"),[product,setProduct]=useState<Product>("SPOT"),[horizon,setHorizon]=useState<Horizon>("SWING"),[symbol,setSymbol]=useState(stocks[0]?.symbol??"HDFCBANK"),[quote,setQuote]=useState<FuturesQuote>(),[quoteState,setQuoteState]=useState("SPOT PRICE REFERENCE"),[account,setAccount]=useState("500000"),[riskPct,setRiskPct]=useState("1"),[liveTick,setLiveTick]=useState<LiveTick>(),[streamState,setStreamState]=useState("NSE BROKER FEED REQUIRED"),[timeframes,setTimeframes]=useState<TimeframeSignal[]>([]),[timeframeState,setTimeframeState]=useState("NSE BROKER FEED REQUIRED"),[timeframeUpdatedAt,setTimeframeUpdatedAt]=useState<number>();
-  const latestPrice=useRef<number>(),reconnectTimer=useRef<number>();
+  const latestPrice=useRef<number|undefined>(undefined),reconnectTimer=useRef<number|undefined>(undefined);
   const instruments=market==="NSE"?stocks:coins,instrument=useMemo(()=>instruments.find(item=>item.symbol===symbol)??instruments[0],[instruments,symbol]);
   const name=instrument?("company"in instrument?instrument.company:instrument.name):"",move=instrument?("change"in instrument?instrument.change:instrument.change24h):0,volatility=instrument&&"volatility"in instrument?instrument.volatility??0:0;
   const archived=market==="CRYPTO"&&instrument&&"futures"in instrument?instrument.futures:undefined;
