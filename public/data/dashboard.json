@@ -1,5 +1,6 @@
 {
   "generatedAt": "2026-08-16T15:30:00+05:30",
+  "dataMode": "DEMONSTRATION SNAPSHOT · LIVE EVIDENCE WORKFLOW READY",
   "market": { "regime": "CONSTRUCTIVE", "score": 72, "nifty": 25483.6, "niftyChange": 0.64, "vix": 13.28, "breadth": 61 },
   "portfolio": {
     "value": 542680,
@@ -7,7 +8,13 @@
     "totalReturn": 8.54,
     "maxDrawdown": -3.18,
     "cash": 12,
-    "history": [500000,502400,501300,506900,505100,509400,512800,511700,515900,518200,516400,521600,524100,522800,526900,529600,527500,531800,535200,533900,538400,536700,540800,542680]
+    "history": [500000,502400,501300,506900,505100,509400,512800,511700,515900,518200,516400,521600,524100,522800,526900,529600,527500,531800,535200,533900,538400,536700,540800,542680],
+    "historyByPeriod": {
+      "1W": [536700,538600,537900,540800,542680],
+      "1M": [500000,502400,501300,506900,505100,509400,512800,511700,515900,518200,516400,521600,524100,522800,526900,529600,527500,531800,535200,533900,538400,536700,540800,542680],
+      "3M": [472000,476800,481500,479200,487900,493100,489700,498800,505200,501400,509900,516700,512300,521200,527900,524500,532000,537100,534800,542680],
+      "1Y": [410000,421000,416800,432500,441000,438500,452000,466000,459000,475500,487000,481000,498000,512000,506000,524000,518000,536000,529000,542680]
+    }
   },
   "longTerm": [
     { "symbol":"HDFCBANK", "company":"HDFC Bank", "sector":"Financials", "price":2024.4, "change":1.28, "signal":"ACCUMULATE", "confidence":82, "score":84, "allocation":8, "rationale":"Deposit growth and improving operating leverage support a multi-quarter earnings recovery while asset quality remains resilient.", "risk":"A slower deposit franchise or renewed margin compression would weaken the thesis.", "spark":[41,43,42,46,45,48,51,50,54,58,56,61] },
@@ -24,10 +31,10 @@
     { "symbol":"ONGC", "company":"Oil and Natural Gas Corp", "sector":"Energy", "price":246.1, "change":-1.82, "signal":"AVOID", "confidence":77, "score":52, "allocation":0, "rationale":"Negative momentum and deteriorating risk-adjusted trend outweigh commodity support.", "risk":"A sudden oil-price spike could create a rapid counter-trend move.", "spark":[67,64,62,59,60,56,54,52,49,47,45,42] }
   ],
   "events": [
-    { "id":"evt-001", "timestamp":"2026-08-16T13:10:00+05:30", "region":"INDIA", "title":"Infrastructure order activity remains elevated", "source":"Official company exchange filings", "status":"CONFIRMED", "impact":"POSITIVE", "companies":["LT","KEC"], "summary":"New order disclosures reinforce medium-term revenue visibility across engineering and construction." },
-    { "id":"evt-002", "timestamp":"2026-08-16T10:40:00+05:30", "region":"MIDDLE EAST", "title":"Energy-route risk keeps crude volatility elevated", "source":"GDELT cross-source event cluster", "status":"DEVELOPING", "impact":"MIXED", "companies":["ONGC","IOC","INDIGO"], "summary":"Higher route-risk premium benefits upstream producers but raises cost pressure for refiners and airlines." },
-    { "id":"evt-003", "timestamp":"2026-08-15T18:20:00+05:30", "region":"UNITED STATES", "title":"Rate expectations shift after fresh inflation data", "source":"Federal Reserve and FRED releases", "status":"CONFIRMED", "impact":"MIXED", "companies":["INFY","TCS","HCLTECH"], "summary":"Currency support is offset by renewed uncertainty around global technology spending and valuation multiples." },
-    { "id":"evt-004", "timestamp":"2026-08-15T14:00:00+05:30", "region":"ASIA", "title":"Steel-export pricing remains under pressure", "source":"Cross-verified industry releases", "status":"CONFIRMED", "impact":"NEGATIVE", "companies":["TATASTEEL","JSWSTEEL"], "summary":"Regional oversupply continues to cap realisations despite stable domestic demand." }
+    { "id":"evt-001", "timestamp":"2026-08-16T13:10:00+05:30", "publishedAt":"2026-08-16T13:10:00+05:30", "observedAt":"2026-08-16T15:30:00+05:30", "eventAt":"2026-08-16T13:10:00+05:30", "region":"INDIA", "title":"Infrastructure order activity remains elevated", "source":"Demonstration record — source required", "status":"DEVELOPING", "impact":"POSITIVE", "companies":["LT","KEC"], "sourceCount":0, "confirmationBasis":"No original URL in seed data", "isInference":true, "summary":"Illustrative thesis only. It must be replaced by a primary filing or independently corroborated sources before use." },
+    { "id":"evt-002", "timestamp":"2026-08-16T10:40:00+05:30", "publishedAt":"2026-08-16T10:40:00+05:30", "observedAt":"2026-08-16T15:30:00+05:30", "eventAt":"2026-08-16T10:40:00+05:30", "region":"MIDDLE EAST", "title":"Energy-route risk keeps crude volatility elevated", "source":"Demonstration record — source required", "status":"DEVELOPING", "impact":"MIXED", "companies":["ONGC","IOC","INDIGO"], "sourceCount":0, "confirmationBasis":"Awaiting two independent sources", "isInference":true, "summary":"Illustrative impact mapping. No score influence until the scheduled research workflow attaches source evidence." },
+    { "id":"evt-003", "timestamp":"2026-08-15T18:20:00+05:30", "publishedAt":"2026-08-15T18:20:00+05:30", "observedAt":"2026-08-16T15:30:00+05:30", "eventAt":"2026-08-15T18:20:00+05:30", "region":"UNITED STATES", "title":"Rate expectations shift after fresh inflation data", "source":"Demonstration record — source required", "status":"DEVELOPING", "impact":"MIXED", "companies":["INFY","TCS","HCLTECH"], "sourceCount":0, "confirmationBasis":"No original URL in seed data", "isInference":true, "summary":"Illustrative macro-to-stock mapping. The system will not call this confirmed without an original primary source or corroboration." },
+    { "id":"evt-004", "timestamp":"2026-08-15T14:00:00+05:30", "publishedAt":"2026-08-15T14:00:00+05:30", "observedAt":"2026-08-16T15:30:00+05:30", "eventAt":"2026-08-15T14:00:00+05:30", "region":"ASIA", "title":"Steel-export pricing remains under pressure", "source":"Demonstration record — source required", "status":"DEVELOPING", "impact":"NEGATIVE", "companies":["TATASTEEL","JSWSTEEL"], "sourceCount":0, "confirmationBasis":"Awaiting source verification", "isInference":true, "summary":"Illustrative sector pressure thesis. This record is clearly marked developing and carries no evidence boost." }
   ],
   "sectors": [
     { "name":"Capital Goods", "score":84, "change":3.8 },
