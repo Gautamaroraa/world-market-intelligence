@@ -22,6 +22,8 @@ def main() -> int:
         datetime.fromisoformat(crypto["updatedAt"])
         if not 0 <= crypto["score"] <= 100 or not 0 <= crypto["stableReserve"] <= 100:
             raise ValueError("Invalid crypto risk controls")
+        if not crypto.get("history") or crypto.get("portfolioValue", 0) <= 0:
+            raise ValueError("Crypto portfolio history is missing")
         symbols: set[str] = set()
         for asset in crypto["assets"]:
             if asset["symbol"] in symbols or not 0 <= asset["score"] <= 100:
