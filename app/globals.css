@@ -116,3 +116,67 @@ footer { padding:18px 2px 2px; display:flex; justify-content:space-between; colo
 .report-grid { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin:0; }.report-grid>div { background:#0c1415; border:1px solid #263331; padding:11px; }.report-grid dt { color:#6c7c78; font:700 7px ui-monospace,monospace; text-transform:uppercase; }.report-grid dd { margin:6px 0 0; color:#c5cecb; font-size:10px; line-height:1.4; }.evidence-row { width:100%; display:grid; grid-template-columns:10px 1fr auto; align-items:center; gap:10px; border:0; border-top:1px solid #263331; background:transparent; color:#b9c4c0; padding:11px 0; text-align:left; }.evidence-row span b,.evidence-row span small { display:block; }.evidence-row span b { font-size:9px; }.evidence-row span small { color:#65736f; font-size:7px; margin-top:4px; }.evidence-row em { color:#8b9a96; font:700 7px ui-monospace,monospace; font-style:normal; }.status-dot { width:6px;height:6px;border-radius:50%;background:var(--amber);box-shadow:0 0 8px var(--amber);}.status-dot.confirmed{background:var(--green);box-shadow:0 0 8px var(--green)}.status-dot.disputed{background:var(--red);box-shadow:0 0 8px var(--red)}
 .horizon-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }.horizon-grid div { border:1px solid #283635; background:#0c1415; padding:12px; display:grid; gap:6px; }.horizon-grid span { color:#657570; font:700 8px ui-monospace,monospace; }.horizon-grid b { font-size:15px; }.inference-badge { color:#f2b84b; border:1px solid rgba(242,184,75,.4); padding:3px 5px; font:800 7px ui-monospace,monospace; margin-right:7px; }.source-link { display:inline-block; color:#7cffde; border:1px solid #3d5e57; padding:10px 12px; text-decoration:none; font:800 8px ui-monospace,monospace; }.report-tags { justify-content:flex-start; max-width:none; }
 @media(max-width:720px){.integrity-banner{grid-template-columns:1fr;}.integrity-banner p{line-height:1.45}.world-panel{min-height:390px}.globe-stage{height:260px}.globe-event-card{left:14px;width:76%}.report-drawer{padding:22px 15px}.two-col,.report-grid{grid-template-columns:1fr}.horizon-grid{grid-template-columns:repeat(2,1fr)}.action-popover{position:fixed;right:12px;top:68px;width:calc(100vw - 24px)}}
+
+/* Readability pass: keep the dense terminal feel without miniature text. */
+body { font-size:16px; }
+.eyebrow,.panel-kicker { font-size:11px; line-height:1.35; }
+.topbar h1 { font-size:25px; }
+.search-box input { font-size:13px; }
+.nav-item { font-size:14px; }
+.nav-item span,.brand strong { font-size:11px; }
+.brand span { font-size:9px; }
+.sidebar-foot p,.sidebar-foot small { font-size:11px; line-height:1.45; }
+.sidebar-foot strong { font-size:12px; line-height:1.45; }
+.system-state { font-size:10px; }
+.integrity-banner { font-size:10px; line-height:1.5; }
+.market-strip p { font-size:10px; }
+.market-strip article>span { font-size:11px; }
+.panel-head h3 { font-size:19px; line-height:1.25; }
+.period-tabs button,.filter-tabs button,.horizon-toggle button { font-size:10px; padding:8px 10px; }
+.portfolio-meta { font-size:12px; line-height:1.45; }
+.chart-labels { font-size:9px; }
+.live-badge,.globe-control,.globe-readout span,.globe-readout small { font-size:9px; }
+.globe-event-card span,.globe-event-card small { font-size:9px; line-height:1.35; }
+.globe-event-card strong { font-size:13px; line-height:1.35; }
+.impact-legend { font-size:9px; }
+.stock-header { font-size:9px; }
+.stock-row b { font-size:14px; }
+.stock-row small { font-size:11px; line-height:1.35; }
+.security b { font-size:15px; }
+.signal { font-size:9px; }
+.thesis-top>span { font-size:10px; }
+.company-name { font-size:12px; }
+.score-ring small { font-size:8px; }
+.thesis-block p { font-size:9px; }
+.thesis-block span { font-size:13px; line-height:1.65; }
+.allocation span,.review-button { font-size:10px; }
+.verification-rule { font-size:10px; line-height:1.5; }
+.event-copy>div { font-size:9px; }
+.event-copy h4,.event-copy h4 button { font-size:14px; line-height:1.35; }
+.event-copy p { font-size:12px; line-height:1.6; }
+.event-copy small { font-size:10px; line-height:1.45; }
+.company-tags span,.company-tags button { font-size:9px; }
+.sector-row { font-size:12px; }
+.sector-row strong { font-size:12px; }
+.sector-row em { font-size:11px; }
+.sector-hint { font-size:10px; line-height:1.55; }
+footer { font-size:9px; }
+.report-drawer>h2 { font-size:34px; line-height:1.2; }
+.report-drawer>h2 small { font-size:14px; }
+.report-drawer section h3 { font-size:17px; }
+.report-drawer section p { font-size:14px; line-height:1.7; }
+.report-verdict>span { font-size:12px; }
+.report-verdict>em:not(.signal) { font-size:10px; }
+.two-col b,.risk-copy b { font-size:10px; }
+.metric-line { grid-template-columns:140px 1fr 38px; font-size:12px; }
+.method-note,.empty-note { font-size:10px; }
+.report-grid dt { font-size:9px; }
+.report-grid dd { font-size:13px; }
+.evidence-row { color:#b9c4c0; text-decoration:none; cursor:pointer; }
+.evidence-row span b { font-size:12px; line-height:1.4; }
+.evidence-row span small,.evidence-row em { font-size:9px; line-height:1.4; }
+.horizon-grid span { font-size:10px; }
+.inference-badge,.source-link { font-size:10px; }
+.report-primary-link { display:inline-flex; margin:0 0 16px; color:#06100e; background:#7cffde; border:1px solid #7cffde; padding:12px 15px; text-decoration:none; font:900 11px ui-monospace,monospace; letter-spacing:.05em; }
+.report-primary-link:hover { background:var(--acid); border-color:var(--acid); }
+@media(max-width:720px){.event-copy h4,.event-copy h4 button{font-size:13px}.event-copy p{font-size:11px}.stock-row b{font-size:13px}.stock-row small{font-size:10px}.report-drawer>h2{font-size:27px}.report-drawer section p{font-size:13px}}
