@@ -22,6 +22,7 @@ def _parse_seen_date(raw: str | None) -> str:
 
 
 def collect_articles(query: str, max_records: int = 75, timeout: int = 25) -> list[dict]:
+    observed_at = datetime.now(timezone.utc).isoformat()
     params = urlencode({
         "query": query,
         "mode": "artlist",
@@ -42,9 +43,13 @@ def collect_articles(query: str, max_records: int = 75, timeout: int = 25) -> li
         title = (item.get("title") or "Untitled market event").strip()
         if not url:
             continue
+        published_at = _parse_seen_date(item.get("seendate"))
         articles.append({
             "id": hashlib.sha256(url.encode("utf-8")).hexdigest()[:16],
-            "timestamp": _parse_seen_date(item.get("seendate")),
+            "timestamp": published_at,
+            "publishedAt": published_at,
+            "observedAt": observed_at,
+            "eventAt": published_at,
             "title": title,
             "url": url,
             "source": item.get("domain") or "GDELT indexed source",
