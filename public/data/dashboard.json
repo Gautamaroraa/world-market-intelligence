@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T18:03:48.160004+00:00",
+  "generatedAt": "2026-08-18T18:54:33.351543+00:00",
   "dataMode": "DEMONSTRATION SNAPSHOT · LIVE EVIDENCE WORKFLOW READY",
   "market": {
     "regime": "CONSTRUCTIVE",
@@ -782,13 +782,13 @@
     }
   ],
   "crypto": {
-    "updatedAt": "2026-08-18T18:03:45.973444+00:00",
+    "updatedAt": "2026-08-18T18:54:31.558248+00:00",
     "dataMode": "LIVE COINBASE + KRAKEN CROSS-CHECKED SPOT SNAPSHOT",
     "regime": "RISK-SELECTIVE",
     "score": 66,
     "feedQuality": "VERIFIED",
-    "portfolioValue": 9107.6,
-    "dayChange": 0.09,
+    "portfolioValue": 9121.82,
+    "dayChange": 0.24,
     "maxDrawdown": -10.18,
     "history": [
       9500,
@@ -884,7 +884,8 @@
       9118.25,
       9116.73,
       9113.63,
-      9107.6
+      9107.6,
+      9121.82
     ],
     "stableReserve": 30,
     "btcDominance": 58.2,
@@ -893,10 +894,10 @@
         "symbol": "BTC",
         "name": "Bitcoin",
         "sector": "Store of Value",
-        "price": 64627.245,
-        "change24h": 0.31,
+        "price": 64741.485,
+        "change24h": 0.49,
         "change7d": 4.2,
-        "volume24h": 3375.8,
+        "volume24h": 3420.81,
         "volatility": 1.61,
         "score": 71,
         "signal": "HOLD",
@@ -904,24 +905,24 @@
         "allocationCycle": 22,
         "rationale": "Market leadership, superior spot liquidity and positive medium-horizon momentum support a core allocation, sized below the equity risk budget.",
         "risk": "Reduce if liquidity deteriorates, the 24-hour score falls below 62, or the seven-day trend breaks with expanding volatility.",
-        "observedAt": "2026-08-18T18:03:45.973444+00:00",
+        "observedAt": "2026-08-18T18:54:31.558248+00:00",
         "source": "Coinbase + Kraken",
         "sourceUrl": "https://www.coinbase.com/price/btc",
         "exchangePrices": {
-          "Coinbase": 64630.29,
-          "Kraken": 64624.2
+          "Coinbase": 64742.87,
+          "Kraken": 64740.1
         },
-        "spreadBps": 0.9,
+        "spreadBps": 0.4,
         "feedQuality": "VERIFIED"
       },
       {
         "symbol": "ETH",
         "name": "Ethereum",
         "sector": "Smart Contracts",
-        "price": 1910.325,
-        "change24h": 0.0,
+        "price": 1914.955,
+        "change24h": 0.24,
         "change7d": 2.7,
-        "volume24h": 48660.03,
+        "volume24h": 49214.45,
         "volatility": 2.0,
         "score": 68,
         "signal": "HOLD",
@@ -929,64 +930,64 @@
         "allocationCycle": 16,
         "rationale": "Deep liquidity and ecosystem activity support exposure, but relative strength versus Bitcoin remains the confirmation gate.",
         "risk": "Underperformance against Bitcoin plus weakening network and exchange-flow evidence invalidates the allocation.",
-        "observedAt": "2026-08-18T18:03:45.973444+00:00",
+        "observedAt": "2026-08-18T18:54:31.558248+00:00",
         "source": "Coinbase + Kraken",
         "sourceUrl": "https://www.coinbase.com/price/eth",
         "exchangePrices": {
-          "Coinbase": 1910.45,
-          "Kraken": 1910.2
+          "Coinbase": 1914.91,
+          "Kraken": 1915.0
         },
-        "spreadBps": 1.3,
+        "spreadBps": 0.5,
         "feedQuality": "VERIFIED"
       },
       {
         "symbol": "SOL",
         "name": "Solana",
         "sector": "Layer 1",
-        "price": 76.9,
-        "change24h": 1.32,
+        "price": 77.195,
+        "change24h": 1.71,
         "change7d": 6.1,
-        "volume24h": 306754.77,
-        "volatility": 2.77,
-        "score": 77,
-        "signal": "HOLD",
+        "volume24h": 316807.72,
+        "volatility": 2.76,
+        "score": 78,
+        "signal": "ACCUMULATE",
         "allocationTactical": 10,
         "allocationCycle": 8,
         "rationale": "Strong tactical momentum and ecosystem activity are offset by higher volatility, so position size is capped.",
         "risk": "A volatility spike above the risk band or material network reliability issue triggers a reduction.",
-        "observedAt": "2026-08-18T18:03:45.973444+00:00",
+        "observedAt": "2026-08-18T18:54:31.558248+00:00",
         "source": "Coinbase + Kraken",
         "sourceUrl": "https://www.coinbase.com/price/sol",
         "exchangePrices": {
-          "Coinbase": 76.91,
-          "Kraken": 76.89
+          "Coinbase": 77.19,
+          "Kraken": 77.2
         },
-        "spreadBps": 2.6,
+        "spreadBps": 1.3,
         "feedQuality": "VERIFIED"
       },
       {
         "symbol": "LINK",
         "name": "Chainlink",
         "sector": "Oracle Infrastructure",
-        "price": 9.46199,
-        "change24h": -0.41,
+        "price": 9.50524,
+        "change24h": 0.05,
         "change7d": 1.9,
-        "volume24h": 498100.02,
-        "volatility": 2.43,
-        "score": 63,
+        "volume24h": 502931.39,
+        "volatility": 2.42,
+        "score": 64,
         "signal": "HOLD",
         "allocationTactical": 5,
         "allocationCycle": 5,
         "rationale": "Infrastructure relevance supports cycle exposure, but short-horizon momentum has not confirmed an accumulation signal.",
         "risk": "Persistent relative weakness or declining liquidity keeps the asset below the portfolio threshold.",
-        "observedAt": "2026-08-18T18:03:45.973444+00:00",
+        "observedAt": "2026-08-18T18:54:31.558248+00:00",
         "source": "Coinbase + Kraken",
         "sourceUrl": "https://www.coinbase.com/price/link",
         "exchangePrices": {
-          "Coinbase": 9.461,
-          "Kraken": 9.46298
+          "Coinbase": 9.503,
+          "Kraken": 9.50748
         },
-        "spreadBps": 2.1,
+        "spreadBps": 4.7,
         "feedQuality": "VERIFIED"
       },
       {
@@ -996,7 +997,7 @@
         "price": 6.3485,
         "change24h": 0.15,
         "change7d": -2.3,
-        "volume24h": 371112.74,
+        "volume24h": 372452.74,
         "volatility": 3.42,
         "score": 68,
         "signal": "HOLD",
@@ -1004,12 +1005,12 @@
         "allocationCycle": 3,
         "rationale": "Cycle optionality remains, but current momentum and volatility do not justify tactical risk.",
         "risk": "Do not add until the score recovers above 60 with improving liquidity and relative strength.",
-        "observedAt": "2026-08-18T18:03:45.973444+00:00",
+        "observedAt": "2026-08-18T18:54:31.558248+00:00",
         "source": "Coinbase + Kraken",
         "sourceUrl": "https://www.coinbase.com/price/avax",
         "exchangePrices": {
-          "Coinbase": 6.349,
-          "Kraken": 6.348
+          "Coinbase": 6.348,
+          "Kraken": 6.349
         },
         "spreadBps": 1.6,
         "feedQuality": "VERIFIED"
@@ -1018,10 +1019,10 @@
         "symbol": "XRP",
         "name": "XRP",
         "sector": "Payments",
-        "price": 1.0,
-        "change24h": -0.16,
+        "price": 1.000665,
+        "change24h": -0.09,
         "change7d": 0,
-        "volume24h": 26732351.35,
+        "volume24h": 27081835.42,
         "volatility": 1.76,
         "score": 65,
         "signal": "HOLD",
@@ -1030,23 +1031,23 @@
         "rationale": "Established exchange liquidity and payment-network usage justify monitored exposure, subject to regulatory and concentration controls.",
         "risk": "Regulatory decisions, token concentration and network adoption remain major invalidation risks.",
         "feedQuality": "VERIFIED",
-        "observedAt": "2026-08-18T18:03:45.973444+00:00",
+        "observedAt": "2026-08-18T18:54:31.558248+00:00",
         "source": "Coinbase + Kraken",
         "sourceUrl": "https://www.coinbase.com/price/xrp",
         "exchangePrices": {
-          "Coinbase": 1.0,
-          "Kraken": 1.0
+          "Coinbase": 1.0007,
+          "Kraken": 1.00063
         },
-        "spreadBps": 0.0
+        "spreadBps": 0.7
       },
       {
         "symbol": "ADA",
         "name": "Cardano",
         "sector": "Layer 1",
-        "price": 0.1741615,
-        "change24h": 0.14,
+        "price": 0.1741285,
+        "change24h": 0.12,
         "change7d": 0,
-        "volume24h": 26279286.94,
+        "volume24h": 26647338.65,
         "volatility": 3.37,
         "score": 69,
         "signal": "HOLD",
@@ -1055,74 +1056,74 @@
         "rationale": "A long operating history and broad exchange availability support eligibility, but activity and momentum must confirm allocation.",
         "risk": "Weak application activity or sustained relative underperformance keeps the asset below accumulation thresholds.",
         "feedQuality": "VERIFIED",
-        "observedAt": "2026-08-18T18:03:45.973444+00:00",
+        "observedAt": "2026-08-18T18:54:31.558248+00:00",
         "source": "Coinbase + Kraken",
         "sourceUrl": "https://www.coinbase.com/price/ada",
         "exchangePrices": {
-          "Coinbase": 0.17417,
-          "Kraken": 0.174153
+          "Coinbase": 0.17413,
+          "Kraken": 0.174127
         },
-        "spreadBps": 1.0
+        "spreadBps": 0.2
       },
       {
         "symbol": "DOT",
         "name": "Polkadot",
         "sector": "Interoperability",
-        "price": 0.7488,
-        "change24h": -1.56,
+        "price": 0.752,
+        "change24h": -1.14,
         "change7d": 0,
-        "volume24h": 1365538.26,
-        "volatility": 5.4,
-        "score": 53,
+        "volume24h": 1391751.72,
+        "volatility": 5.37,
+        "score": 54,
         "signal": "WATCH",
         "allocationTactical": 3,
         "allocationCycle": 3,
         "rationale": "Interoperability infrastructure and multi-exchange liquidity justify continued monitoring at a limited weight.",
         "risk": "Low ecosystem traction or persistent token-supply pressure would invalidate the cycle thesis.",
         "feedQuality": "VERIFIED",
-        "observedAt": "2026-08-18T18:03:45.973444+00:00",
+        "observedAt": "2026-08-18T18:54:31.558248+00:00",
         "source": "Coinbase + Kraken",
         "sourceUrl": "https://www.coinbase.com/price/dot",
         "exchangePrices": {
-          "Coinbase": 0.7489,
-          "Kraken": 0.7487
+          "Coinbase": 0.7518,
+          "Kraken": 0.7522
         },
-        "spreadBps": 2.7
+        "spreadBps": 5.3
       },
       {
         "symbol": "LTC",
         "name": "Litecoin",
         "sector": "Payments",
-        "price": 44.2865,
-        "change24h": -0.61,
+        "price": 44.462,
+        "change24h": -0.22,
         "change7d": 0,
-        "volume24h": 54531.79,
-        "volatility": 1.38,
-        "score": 63,
+        "volume24h": 55804.68,
+        "volatility": 1.37,
+        "score": 64,
         "signal": "HOLD",
         "allocationTactical": 2,
         "allocationCycle": 2,
         "rationale": "Long operating history and reliable exchange liquidity qualify Litecoin as a small diversifier rather than a core holding.",
         "risk": "Limited growth catalysts and structural underperformance versus Bitcoin cap allocation.",
         "feedQuality": "VERIFIED",
-        "observedAt": "2026-08-18T18:03:45.973444+00:00",
+        "observedAt": "2026-08-18T18:54:31.558248+00:00",
         "source": "Coinbase + Kraken",
         "sourceUrl": "https://www.coinbase.com/price/ltc",
         "exchangePrices": {
-          "Coinbase": 44.283,
-          "Kraken": 44.29
+          "Coinbase": 44.464,
+          "Kraken": 44.46
         },
-        "spreadBps": 1.6
+        "spreadBps": 0.9
       },
       {
         "symbol": "UNI",
         "name": "Uniswap",
         "sector": "DeFi",
-        "price": 3.27955,
-        "change24h": -0.46,
+        "price": 3.2822,
+        "change24h": -0.38,
         "change7d": 0,
-        "volume24h": 568647.95,
-        "volatility": 2.59,
+        "volume24h": 579509.06,
+        "volatility": 2.58,
         "score": 63,
         "signal": "HOLD",
         "allocationTactical": 2,
@@ -1130,14 +1131,14 @@
         "rationale": "Protocol relevance and multi-exchange liquidity support DeFi exposure with a strict volatility cap.",
         "risk": "Smart-contract, regulatory and token-value-accrual risks can rapidly invalidate the position.",
         "feedQuality": "VERIFIED",
-        "observedAt": "2026-08-18T18:03:45.973444+00:00",
+        "observedAt": "2026-08-18T18:54:31.558248+00:00",
         "source": "Coinbase + Kraken",
         "sourceUrl": "https://www.coinbase.com/price/uni",
         "exchangePrices": {
-          "Coinbase": 3.2791,
-          "Kraken": 3.28
+          "Coinbase": 3.2817,
+          "Kraken": 3.2827
         },
-        "spreadBps": 2.7
+        "spreadBps": 3.0
       }
     ],
     "sectors": [
